@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\V1;
+namespace App\Filters\V1;
 
 use App\Filters\ApiFilter;
 use Illuminate\Http\Request;
@@ -9,6 +9,7 @@ class CustomerFilter extends ApiFilter
 {
     // query eg -> /api/customers?postalCode[lt]=10000
    protected $safeParams = [
+       'id' => ['eq'],
        'name' => ['eq'],
        'type' => ['eq'],
        'email' => ['eq'],
