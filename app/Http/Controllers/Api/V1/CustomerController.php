@@ -11,8 +11,11 @@ use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Models\Invoice;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use function Laravel\Prompts\error;
 
 class CustomerController extends Controller
 {
@@ -94,6 +97,12 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $user = Auth::user();
+        if($user->tokenCan('delete')) {
+            $customer->delete();
+        }else {
+            return \response()->json(['message' => 'No permission to access this resource'],403);
+        }
+
     }
 }
